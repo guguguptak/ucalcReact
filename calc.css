@@ -1,0 +1,63 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 24px;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+input, button {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    padding: 0.5rem 0;
+}
+
+input {
+    padding: 0.5rem;
+    font-size: 125%;
+    max-width: 10rem;
+}
+
+body {
+    font-family: Calibri, sans-serif;
+}
+
+/*
+input[type='number']#result {
+    -moz-appearance: textfield;
+}
+
+input#result::-webkit-outer-spin-button,
+input#result::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+*/
+
+.calc-grid {
+    background: #eee;
+    padding: 0.5rem;
+    border: 2px #ddd groove;
+    display: inline-grid;
+    grid-gap: 0.5rem;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#result {
+    text-align: right;
+}
