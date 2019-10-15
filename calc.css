@@ -23,7 +23,7 @@ button {
 }
 
 input {
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem;
     font-size: 125%;
     max-width: 10rem;
 }
@@ -33,12 +33,12 @@ body {
 }
 
 /*
-input[type='number']#result {
+input[type='number']#subtotal {
     -moz-appearance: textfield;
 }
 
-input#result::-webkit-outer-spin-button,
-input#result::-webkit-inner-spin-button {
+input#subtotal::-webkit-outer-spin-button,
+input#subtotal::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 */
@@ -58,6 +58,19 @@ input#result::-webkit-inner-spin-button {
     height: 100%;
 }
 
-#result {
+#calc-input {
     text-align: right;
+    border: none;
+    padding-top: 0;
+}
+
+#calc-subtotal {
+    text-align: right;
+    padding-right: 0.25rem;
+    font-size: 80%;
+    background: linear-gradient(to bottom, #cbebff 0%, #FFFFFF 100%);
+}
+
+#calc-window {
+    border: 1px solid #888;
 }
