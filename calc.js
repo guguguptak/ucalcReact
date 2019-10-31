@@ -45,11 +45,12 @@ const calcController = {
     },
     set isDecimalDot( b ) {
         calcModel.isDecimalDot = b;
-    }
+    },
 };
 
 function inputNumber( n ) {
     // TODO decimal dot
+    //calcController.isDecimalDot = calcController.subtotal / 10;
     calcController.input = calcController.opWasLast ? n : calcController.input * 10 + n;
     calcController.opWasLast = false;
 }
@@ -67,11 +68,29 @@ function doOperation() {
     switch ( calcController.lastOp ) {
         case '+' :
             calcController.input += calcController.subtotal;
-        // TODO add ops
+            break;
+        case '-':
+            calcController.input = calcController.subtotal - calcController.input;
+            break;
+        case '*':
+            calcController.input *= calcController.subtotal;
+            break;
+        case '/':
+            calcController.input = calcController.subtotal / calcController.input;
+            break;
+        // throw new Error( 'invalid operation' );
     }
     calcController.lastOp = null;
     // calcController.input = 0;
     // TODO decimal dot
+}
+
+function clearCalc() {
+    if ( calcController.subtotal !== null && calcController.input === 0 ) {
+        calcController.subtotal = null;
+    } else {
+        calcController.input = 0;
+    }
 }
 
 for ( let i = 0; i <= 9; i++ ) {
@@ -82,7 +101,9 @@ for ( let i = 0; i <= 9; i++ ) {
 
 const opMap = {
     'plus': '+',
-    // TODO add ops
+    'minus': '-',
+    'times': '*',
+    'divide': '/',
 };
 
 for ( const [k, v] of Object.entries( opMap ) ) {
@@ -91,12 +112,38 @@ for ( const [k, v] of Object.entries( opMap ) ) {
     } );
 }
 
+$( '#calc-clear' ).click( () => {
+    clearCalc();
+} );
+
 $( '#calc-total' ).click( () => {
     doOperation();
     calcController.subtotal = null;
 } );
 
-// TODO decimal dot
-// TODO clear/clear all
-// TODO dodać listner do klawiatury
+const keymap = {
+    'Enter': () => doOperation(),
+    'Escape': () => clearCalc(),
+};
 
+for ( let i = 0; i <= 9; i++ ) {
+    keymap['' + i] = () => inputNumber( i );
+}
+
+for ( const [k, v] of Object.entries( opMap ) ) {
+    keymap[v] = () => selectOperation( v );
+}
+
+$( '#calc-body' ).keydown( ( evt ) => {
+    const action = keymap[evt.key];
+    if (action === undefined){
+       return;
+    }
+    action();
+    evt.preventDefault();
+} );
+
+
+// TODO decimal dot
+//TODO obsługa liczb ujemnych
+//TODO obsługa MR, MS, MC M+

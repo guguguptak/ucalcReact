@@ -1,0 +1,109 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /*background-color: #3ab2b0;*/
+    background-image: linear-gradient(to bottom, #30d0c5, #71ded3);
+
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 30px;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    border-radius: 15px;
+    box-shadow: 2px -5px 0 0 #0ccccc;
+}
+
+input, button {
+    outline: none;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    box-shadow: 1px -3px 0 0 #3ab2b0;
+    background-color: transparent;
+    border-radius: 15px;
+    border: 1px solid #d6bcd6;
+    display: inline-block;
+    cursor: pointer;
+    color: #3a8a9e;
+    font-size: 24px;
+    text-decoration: none;
+    text-shadow: 0 2px 0 #e1e2ed;
+    padding: 0.2rem 0;
+    animation: rotation 4s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+input {
+    padding: 0.10rem 0.5rem;
+    font-size: 130%;
+    max-width: 10rem;
+}
+
+body {
+    font-family: Comic Sans, sans-serif;
+}
+
+/*
+input[type='number']#subtotal {
+    -moz-appearance: textfield;
+}
+
+input#subtotal::-webkit-outer-spin-button,
+input#subtotal::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+*/
+
+.calc-grid {
+    /*background: black;*/
+    background-image:linear-gradient(to bottom, #2e4e50, #060606);
+    padding: 0.5rem;
+    border: 3px #0cf1f1 groove;
+    display: inline-grid;
+    grid-gap: 0.5rem;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#calc-input {
+    text-align: right;
+    border: none;
+    padding-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#calc-subtotal {
+    text-align: right;
+    padding-right: 0.5rem;
+    font-size: 80%;
+    background: linear-gradient(to bottom, #cbebff 0%, #FFFFFF 100%);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#calc-window {
+    border: 1px solid #1dd7e5;
+    border-radius: 0;
+}
