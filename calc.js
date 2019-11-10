@@ -1,14 +1,19 @@
 const calcModel = {
     subtotal: null,
-    input: 0,
+    input: null,
     lastOp: null,
     opWasLast: false,
     isDecimalDot: false,
+    memory: null,
 };
 
-function updateResult() {
-    $( '#calc-subtotal' )[0].innerText = ( calcModel.subtotal === null ) ? '\xA0' : calcModel.subtotal
-        + ( ( calcModel.lastOp === null ) ? '' : ' ' + calcModel.lastOp );
+function updateSubtotal() {
+    $( '#calc-subtotal' ).text( ( calcModel.subtotal === null ) ? '\xA0' : calcModel.subtotal
+        + ( ( calcModel.lastOp === null ) ? '' : ' ' + calcModel.lastOp ) );
+}
+
+function updateInput( n ) {
+    $( '#calc-input' )[0].value = n;
 }
 
 const calcController = {
@@ -17,14 +22,14 @@ const calcController = {
     },
     set subtotal( n ) {
         calcModel.subtotal = n;
-        updateResult();
+        updateSubtotal();
     },
     get input() {
         return calcModel.input;
     },
     set input( n ) {
         calcModel.input = n;
-        $( '#calc-input' )[0].value = n;
+        updateInput( n );
     },
     get lastOp() {
         return calcModel.lastOp;
@@ -32,7 +37,7 @@ const calcController = {
     set lastOp( op ) {
         calcModel.lastOp = op;
         calcModel.subtotal = calcModel.input;
-        updateResult();
+        updateSubtotal();
     },
     get opWasLast() {
         return calcModel.opWasLast;
@@ -45,6 +50,13 @@ const calcController = {
     },
     set isDecimalDot( b ) {
         calcModel.isDecimalDot = b;
+    },
+    get memory() {
+        return calcModel.memory;
+    },
+    set memory( n ) {
+        calcModel.memory = n;
+        $( '#calc-memory-display' ).text( ( n === null ) ? '' : 'M' );
     },
 };
 
@@ -121,6 +133,28 @@ $( '#calc-total' ).click( () => {
     calcController.subtotal = null;
 } );
 
+$( '#calc-sign' ).click( () => {
+    calcController.input *= -1;
+} );
+
+$( '#calc-memory-clear' ).click( () => {
+    calcController.memory = null;
+} );
+
+$( '#calc-memory-recall' ).click( () => {
+    if ( calcController.memory !== null ) {
+        calcController.input = calcController.memory;
+    }
+} );
+
+$( '#calc-memory-store' ).click( () => {
+    calcController.memory = calcController.input;
+} );
+
+$( '#calc-memory-add' ).click( () => {
+    calcController.memory += calcController.input;
+} );
+
 const keymap = {
     'Enter': () => doOperation(),
     'Escape': () => clearCalc(),
@@ -136,14 +170,13 @@ for ( const [k, v] of Object.entries( opMap ) ) {
 
 $( '#calc-body' ).keydown( ( evt ) => {
     const action = keymap[evt.key];
-    if (action === undefined){
-       return;
+    if ( action === undefined ) {
+        return;
     }
     action();
     evt.preventDefault();
 } );
 
-
+calcController.input = 0;
 // TODO decimal dot
-//TODO obsługa liczb ujemnych
-//TODO obsługa MR, MS, MC M+
+
