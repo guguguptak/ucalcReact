@@ -71,13 +71,16 @@ input#subtotal::-webkit-inner-spin-button {
     background: linear-gradient(to bottom, #cbebff 0%, #FFFFFF 100%);
 }
 
-#calc-memory-display {
-    border: none;
-    display: inline-flex;
-    background:#fff;
-    grid-gap: 0;
+#calc-input-line {
+    display: flex;
 }
 
+#calc-memory-display {
+    display: inline;
+    background: #fff;
+    padding: 0.25rem;
+    min-width: 1.5rem;
+}
 
 #calc-window {
     border: 1px solid #888;

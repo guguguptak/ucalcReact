@@ -15,7 +15,7 @@ html {
 *, *:before, *:after {
     box-sizing: inherit;
     border-radius: 15px;
-    box-shadow: 2px -5px 0 0 #0ccccc;
+    box-shadow: 2px -3px 0 0 #cdf5e8;
 }
 
 input, button {
@@ -36,17 +36,17 @@ button {
     text-decoration: none;
     text-shadow: 0 2px 0 #e1e2ed;
     padding: 0.2rem 0;
-    animation: rotation 4s infinite linear;
+    /*animation: rotation 4s infinite linear;*/
 }
 
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+/*@keyframes rotation {*/
+/*    from {*/
+/*        transform: rotate(0deg);*/
+/*    }*/
+/*    to {*/
+/*        transform: rotate(360deg);*/
+/*    }*/
+/*}*/
 
 
 input {
@@ -105,5 +105,20 @@ input#subtotal::-webkit-inner-spin-button {
 
 #calc-window {
     border: 1px solid #1dd7e5;
-    border-radius: 0;
+    border-radius: 12px 0 12px 0;
+    box-shadow: none;
 }
+#calc-input-line {
+    border-radius: 2px 10px 2px 10px;
+    display: flex;
+
+}
+
+#calc-memory-display {
+    display: inline;
+    background: #fff;
+    padding: 0.25rem;
+    min-width: 1.5rem;
+    border-radius: 2px;
+}
+
