@@ -77,7 +77,11 @@ export function updateView() {
     } );
 
     const keymap = {
-        'Enter': () => doOrRepeat(),
+
+        'Enter': () => {
+           // document.getElementById('calc-total').style.transform = 'scale(1.2)';
+            doOrRepeat();
+        },
         'Escape': () => clearCalc(),
         'Backspace': () => undoInput(),
         '.': () => toggleDot(),
@@ -105,3 +109,4 @@ export function updateView() {
 
     calcController.input = 0;
 }
+

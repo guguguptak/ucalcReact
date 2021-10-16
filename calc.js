@@ -1,3 +1,4 @@
+
 const PRECISION_MAX = 10;
 const MIN_NON_EXPONENTIAL = Math.pow( 10, -PRECISION_MAX );
 const MAX_NON_EXPONENTIAL = Math.pow( 10, PRECISION_MAX );
