@@ -4,18 +4,18 @@ const el = React.createElement;
 
 class NumericButton extends React.Component {
     render() {
-        /*
+
         return (
             <button>
                 {this.props.caption}
             </button>
         );
-        */
-        return React.createElement(
-            'button',
-            {},
-            this.props.caption
-        );
+
+        // return React.createElement(
+        //     'button',
+        //     {},
+        //     this.props.caption
+        // );
     }
 }
 
