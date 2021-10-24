@@ -3,37 +3,15 @@
 class NumericButton extends React.Component {
     render() {
         return (
-            <button>
-                {this.props.caption}
+            <button onClick={() => store.dispatch( {
+                type: 'SET_NUMBER',
+                number: this.props.number
+            } )}>
+                {this.props.number}
             </button>
         );
-
-        // return React.createElement(
-        //     'button',
-        //     {},
-        //     this.props.caption
-        // );
     }
 }
-
-/*
-class Keyboard extends React.Component {
-    render() {
-        return Array.from(
-            { length: 10 },
-            ( _, i ) => {
-                return React.createElement(
-                    NumericButton,
-                    {
-                        key: i,
-                        caption: i
-                    }
-                );
-            }
-        );
-    }
-}
-*/
 
 class Keyboard extends React.Component {
     render() {
@@ -41,13 +19,42 @@ class Keyboard extends React.Component {
             { length: 10 },
             ( _, i ) => {
                 return (
-                    <NumericButton key={i} caption={i} />
+                    <NumericButton key={i} number={i} />
                 );
             }
         );
     }
 }
 
-const domContainer = document.querySelector( '.main' );
+function Screen() {
+    const number = ReactRedux.useSelector( ( state ) => state.number );
 
-ReactDOM.render( React.createElement( Keyboard ), domContainer );
+    return (
+        <div>{number}</div>
+    );
+}
+
+class Calc extends React.Component {
+    render() {
+        return (
+            <ReactRedux.Provider store={store}>
+                <div>
+                    <Screen />
+                    <Keyboard />
+                </div>
+            </ReactRedux.Provider>
+        );
+    }
+}
+
+function updateStore( state = {}, action ) {
+    switch ( action.type ) {
+        case 'SET_NUMBER':
+            return { number: action.number };
+        default:
+            return state;
+    }
+}
+
+const store = Redux.createStore( updateStore, { number: 0 } );
+ReactDOM.render( <Calc />, document.getElementsByTagName( 'calc-main' )[0] );
