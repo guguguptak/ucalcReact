@@ -15,16 +15,11 @@ class CalcController {
         } );
     }
 
-    static calcOperationPressed( operationButton ) {
+    static calcOperationPressed( operation ) {
         store.dispatch( {
-                type: 'SET_OPERATION',
-                string: 'dupa'
-            }
-            // {
-            //     type: 'SET_OPERATION',
-            //     string: MinusButton
-            // }
-        );
+            type: 'SET_OPERATION',
+            operation: operation,
+        } );
     }
 }
 
@@ -38,6 +33,24 @@ class NumericButton extends React.Component {
     }
 }
 
+class OperationButton extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.calcOperationPressed( this.props.operation )}>
+                {this.props.operation}
+            </button>
+        );
+    }
+}
+
+class TotalButton extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.calcTotalPressed()}>=</button>
+        );
+    }
+}
+
 class ClearScreen extends React.Component {
     render() {
         return (
@@ -46,63 +59,20 @@ class ClearScreen extends React.Component {
     }
 }
 
-class PlusButton extends React.Component {
-    render() {
-        return (
-            <button onClick={() => CalcController.calcOperationPressed( 'dupa' )}>+</button>
-        );
-    }
-}
-
-class MinusButton extends React.Component {
-    render() {
-        return (
-            <button onClick={() => CalcController.calcOperationPressed( '-' )}>-</button>
-        );
-    }
-}
-
-class TimesButton extends React.Component {
-    render() {
-        return (
-            <button onClick={() => CalcController.calcOperationPressed()}>*</button>
-        );
-    }
-}
-
-class DivideButton extends React.Component {
-    render() {
-        return (
-            <button onClick={() => CalcController.calcOperationPressed()}>/</button>
-        );
-    }
-}
-
-class TotalButton extends React.Component {
-    render() {
-        return (
-            <button onClick={() => CalcController.calcClearPressed()}>=</button>
-        );
-    }
-}
-
 class Keyboard extends React.Component {
     render() {
         return [
-            ...Array.from(
+            Array.from(
                 { length: 10 },
-                ( _, i ) => {
-                    return (
-                        <NumericButton key={i} number={i} />
-                    );
-                }
+                ( _, i ) =>
+                    <NumericButton key={i} number={i} />
             ),
+            ['+', '-', '*', '/']
+                .map( s =>
+                    <OperationButton key={s} operation={s} />
+                ),
+            // <TotalButton />,
             <ClearScreen />,
-            <PlusButton />,
-            <MinusButton />,
-            <TimesButton />,
-            <DivideButton />,
-            <TotalButton />
         ];
     }
 }
@@ -134,17 +104,21 @@ function updateStore( state = {}, action ) {
         case 'SET_NUMBER':
             return {
                 ...state, // object spread
-                number: action.number
+                number: action.number,
             };
         case 'SET_OPERATION':
             return {
                 ...state, // object spread
-                string: action.string
+                operation: action.operation,
             };
         default:
             return state;
     }
 }
 
-const store = Redux.createStore( updateStore, { number: 0 } );
+const initialState = {
+    number: 0,
+    operation: null,
+};
+const store = Redux.createStore( updateStore, initialState );
 ReactDOM.render( <Calc />, document.getElementsByTagName( 'calc-main' )[0] );
