@@ -1,32 +1,41 @@
 'use strict';
 
+const SET_RESULT_ACTION = 'SET_RESULT';
+const SET_OPERATION_ACTION = 'SET_OPERATION';
+const SET_SUBTOTAL_ACTION = 'SET_SUBTOTAL';
+
+const SET_STATE_ACTION = 'SET_STATE';
+
 class CalcController {
     static handleNumberPressed( buttonNumber ) {
         store.dispatch( {
-            type: 'SET_NUMBER',
-            number: store.getState().number * 10 + buttonNumber
+            type: SET_RESULT_ACTION,
+            result: store.getState().result * 10 + buttonNumber,
         } );
     }
 
     static calcOperationPressed( operation, ) {
         store.dispatch( {
-            type: 'SET_OPERATION',
-            operation: operation,
+            type: SET_STATE_ACTION,
+            newState: {
+                operation: operation,
+                subtotal: store.getState().result,
+                result: 0,
+            },
         } );
     }
 
     static calcClearPressed() {
         store.dispatch( {
-            type: 'SET_NUMBER',
-            number: 0,
-        } );
-        store.dispatch( {
-            type: 'SET_SUBTOTAL',
-            subtotal: null,
+            type: SET_STATE_ACTION,
+            newState: {
+                result: 0,
+                subtotal: null,
+            },
         } );
     }
-
 }
+
 
 class NumericButton extends React.Component {
     render() {
@@ -48,6 +57,7 @@ class OperationButton extends React.Component {
     }
 }
 
+//
 class TotalButton extends React.Component {
     render() {
         return (
@@ -82,25 +92,19 @@ class Keyboard extends React.Component {
     }
 }
 
-// let subtotal = function UpdateSubtotal() {
-//     const number = ReactRedux.useSelector( ( state ) => state.number );
-//     const operation = ReactRedux.useSelector( ( state ) => state.operation );
-//     if ( this.state.number !== null ) {
-//         this.state.subtotal = number + operation;
-//     }
-// };
-
 function Screen() {
-    const number = ReactRedux.useSelector( ( state ) => state.number );
-    const operation = ReactRedux.useSelector( ( state ) => state.operation );
-    const subtotal = number + operation;
+    const [result, operation, subtotal] = [
+        ( state ) => state.result,
+        ( state ) => state.operation,
+        ( state ) => state.subtotal,
+    ].map( ( x ) => ReactRedux.useSelector( x ) );
     return (
         <div>
-            <div key="subtotal">
-                {subtotal}
+            <div id="subtotal">
+                {subtotal} {operation}
             </div>
-            <div key="input">
-                {number}
+            <div id="input">
+                {result}
             </div>
         </div>
     );
@@ -122,20 +126,25 @@ class Calc extends React.Component {
 
 function updateStore( state = {}, action ) {
     switch ( action.type ) {
-        case 'SET_NUMBER':
+        case SET_STATE_ACTION:
+            return {
+                ...state,
+                ...action.newState,
+            };
+        case SET_RESULT_ACTION:
             return {
                 ...state, // object spread
-                number: action.number,
+                result: action.result,
             };
-        case 'SET_OPERATION':
+        case SET_OPERATION_ACTION:
             return {
                 ...state, // object spread
                 operation: action.operation,
             };
-        case 'SET_SUBTOTAL':
+        case SET_SUBTOTAL_ACTION:
             return {
                 ...state, // object spread
-                operation: action.subtotal,
+                subtotal: action.subtotal,
             };
         default:
             return state;
@@ -143,7 +152,7 @@ function updateStore( state = {}, action ) {
 }
 
 const initialState = {
-    number: 0,
+    result: 0,
     operation: null,
     subtotal: null,
     opWasLast: false,

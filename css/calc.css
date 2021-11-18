@@ -21,7 +21,8 @@ input, button {
 button {
     padding: 0.2rem 0;
 }
-button:hover{
+
+button:hover {
     transform: scale(1.1);
 }
 
@@ -36,7 +37,7 @@ body {
 }
 
 /*
-input[type='number']#subtotal {
+input[type='result']#subtotal {
     -moz-appearance: textfield;
 }
 
@@ -86,5 +87,5 @@ input#subtotal::-webkit-inner-spin-button {
 }
 
 #calc-window {
-     border: 1px solid #888;
- }
+    border: 1px solid #888;
+}
