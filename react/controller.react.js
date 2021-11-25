@@ -113,13 +113,22 @@ class CalcController {
     }
 
     static calcClearPressed() {
-        store.dispatch( {
-            type: SET_STATE_ACTION,
-            newState: {
-                result: 0,
-                subtotal: null,
-                lastOp: null,
-            },
-        } );
+        const state = store.getState();
+        if ( state.result === 0 ) { //TODO FIXME
+            store.dispatch( {
+                type: SET_STATE_ACTION,
+                newState: {
+                    subtotal: null,
+                    lastOp: null,
+                },
+            } );
+        } else {
+            store.dispatch( {
+                type: SET_STATE_ACTION,
+                newState: {
+                    result: 0,
+                },
+            } );
+        }
     }
 }
