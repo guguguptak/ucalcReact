@@ -112,6 +112,30 @@ class CalcController {
         // selectOperation();
     }
 
+    static memoryRecallPressed() {
+        // selectOperation();
+    }
+
+    static memoryStorePressed() {
+        // selectOperation();
+    }
+
+    static memoryAddPressed() {
+        // selectOperation();
+    }
+
+    static memoryClearPressed() {
+        // selectOperation();
+    }
+
+    static dotPressed() {
+        // selectOperation();
+    }
+
+    static signPressed() {
+        // selectOperation();
+    }
+
     static calcClearPressed() {
         const state = store.getState();
         if ( state.result === 0 ) { //TODO FIXME

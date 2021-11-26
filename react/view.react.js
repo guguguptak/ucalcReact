@@ -46,6 +46,57 @@ class ClearScreen extends React.Component {
 }
 
 /*export*/
+class MemoryStore extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.memoryStorePressed()}>MS</button>
+        );
+    }
+}
+
+/*export*/
+class MemoryRecall extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.memoryRecallPressed()}>MR</button>
+        );
+    }
+}/*export*/
+class MemoryClear extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.memoryClearPressed()}>MC</button>
+        );
+    }
+}/*export*/
+class MemoryAdd extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.memoryAddPressed()}>M+</button>
+
+        );
+    }
+}
+
+/*export*/
+class SignButton extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.signPressed()}>&plusmn;</button>
+        );
+    }
+}
+
+/*export*/
+class DotButton extends React.Component {
+    render() {
+        return (
+            <button onClick={() => CalcController.dotPressed()}>.</button>
+        );
+    }
+}
+
+/*export*/
 class Keyboard extends React.Component {
     render() {
         return [
@@ -60,6 +111,12 @@ class Keyboard extends React.Component {
                 ),
             <TotalButton key="=" />,
             <ClearScreen key="C/CE" />,
+            <MemoryClear key="MC" />,
+            <MemoryStore key="MS" />,
+            <MemoryRecall key="MR" />,
+            <MemoryAdd key="M+" />,
+            <DotButton key="dot" />,
+            <SignButton key="sign" />,
         ];
     }
 }
