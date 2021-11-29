@@ -1,0 +1,93 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 24px;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+#input, button {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    padding: 0.2rem 0;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#input {
+    padding: 0.25rem 0.5rem;
+    font-size: 125%;
+    max-width: 10rem;
+}
+
+body {
+    font-family: Calibri, sans-serif;
+}
+
+/*
+input[type='result']#subtotal {
+    -moz-appearance: textfield;
+}
+
+input#subtotal::-webkit-outer-spin-button,
+input#subtotal::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+*/
+
+.calc-grid {
+    background: #eee;
+    padding: 0.25rem;
+    border: 2px #ddd groove;
+    display: inline-grid;
+    grid-gap: 0.5rem;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#input {
+    display: flex;
+    text-align: right;
+    border: none;
+    padding-top: 0;
+}
+
+#subtotal {
+    text-align: right;
+    padding-right: 0.5rem;
+    font-size: 80%;
+    background: linear-gradient(to bottom, #cbebff 0%, #FFFFFF 100%);
+}
+
+#calc-input-line {
+    display: flex;
+}
+
+#calc-memory-display {
+    display: inline;
+    background: #fff;
+    padding: 0.25rem;
+    min-width: 1.5rem;
+}
+
+#screen {
+    border: 1px solid #888;
+    grid-column: 1 / 5;
+}
