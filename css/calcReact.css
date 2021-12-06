@@ -13,7 +13,7 @@ html {
     box-sizing: inherit;
 }
 
-#input, button {
+input, button {
     font-size: inherit;
     font-family: inherit;
 }
@@ -26,15 +26,17 @@ button:hover {
     transform: scale(1.1);
 }
 
-#input {
+#result {
     padding: 0.25rem 0.5rem;
     font-size: 125%;
     max-width: 10rem;
+
 }
 
 body {
     font-family: Calibri, sans-serif;
 }
+
 
 /*
 input[type='result']#subtotal {
@@ -62,8 +64,7 @@ input#subtotal::-webkit-inner-spin-button {
     height: 100%;
 }
 
-#input {
-    display: flex;
+input {
     text-align: right;
     border: none;
     padding-top: 0;
@@ -76,11 +77,11 @@ input#subtotal::-webkit-inner-spin-button {
     background: linear-gradient(to bottom, #cbebff 0%, #FFFFFF 100%);
 }
 
-#calc-input-line {
+#input-line {
     display: flex;
 }
 
-#calc-memory-display {
+#memory {
     display: inline;
     background: #fff;
     padding: 0.25rem;
@@ -90,4 +91,9 @@ input#subtotal::-webkit-inner-spin-button {
 #screen {
     border: 1px solid #888;
     grid-column: 1 / 5;
+}
+
+#calc-operation-plus {
+    grid-column: 4;
+    grid-row: 3 / 5;
 }

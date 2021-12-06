@@ -94,7 +94,8 @@ class CalcController {
     static calcOperationPressed( op ) {
         const state = store.getState();
         const newState = state.opWasLast ? {} : CalcController.doOperation();
-
+     
+        newState.subtotal = state.subtotal;
         newState.lastOp = op;
         newState.opWasLast = true;
         newState.dotPosition = null;
