@@ -88,12 +88,17 @@ input {
     min-width: 1.5rem;
 }
 
+#calc-operation-plus {
+    grid-column: 4;
+    grid-row: 3 / 5;
+}
+
 #screen {
     border: 1px solid #888;
     grid-column: 1 / 5;
 }
 
-#calc-operation-plus {
-    grid-column: 4;
-    grid-row: 3 / 5;
-}
+/*#calc-total {*/
+/*    grid-column: 4;*/
+/*    grid-row: 5 / 7;*/
+/*}*/

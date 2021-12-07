@@ -5,10 +5,23 @@
 //
 // import { initialState } from './model.react.js';
 
+const BUTTONS_NAME_MAP = {
+    '=': 'total',
+    '.': 'dot',
+    '±': 'sign',
+    'MS': 'memory-store',
+    'MC': 'memory-clear',
+    'MR': 'memory-recall',
+    'M+': 'memory-add',
+    'C/CE': 'clear',
+
+};
+
 class CalcButton extends React.Component {
     render() {
         return (
-            <button style={this.props.customStyle} onClick={this.props.func}>{this.props.caption}</button>
+            <button id={'calc-' + BUTTONS_NAME_MAP[this.props.caption]}
+                    style={this.props.customStyle} onClick={this.props.func}>{this.props.caption}</button>
         );
     }
 }
@@ -51,10 +64,6 @@ class Keyboard extends React.Component {
     render() {
 
         return [
-            [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
-                .map( i =>
-                    <NumericButton key={i} number={i} />
-                ),
             // Array.from(
             //     { length: 10 },
             //     ( _, i ) =>
@@ -65,11 +74,14 @@ class Keyboard extends React.Component {
                     <OperationButton key={s} operation={s} />
                 ),
 
-
             <CalcButton func={() => CalcController.calcTotalPressed()}
-                        customStyle={{ gridColumn: 4, gridRow: 5 / 7, }} caption="=" key="=" />,
-            <CalcButton func={() => CalcController.calcClearPressed()}
-                        caption="C/CE" key="C/CE" />,
+                        customStyle={{ gridColumn: 4, gridRow: '5 / 7', }} caption="=" key="=" />,
+
+            [7, 8, 9, 4, 5, 6, 1, 2, 3, 0]
+                .map( i =>
+                    <NumericButton key={i} number={i} />
+                ),
+
             <CalcButton func={() => CalcController.memoryClearPressed()}
                         customStyle={{ gridColumn: 1, gridRow: 2, }} caption="MC" key="MC" />,
             <CalcButton func={() => CalcController.memoryStorePressed()}
@@ -79,7 +91,9 @@ class Keyboard extends React.Component {
             <CalcButton func={() => CalcController.memoryAddPressed()}
                         customStyle={{ gridColumn: 4, gridRow: 2, }} caption="M+" key="M+" />,
             <CalcButton func={() => CalcController.dotPressed()} caption="." key="dot" />,
-            <CalcButton func={() => CalcController.signPressed()} caption="&plusmn;" key="sign" id="sign" />,
+            <CalcButton func={() => CalcController.signPressed()} caption="±" key="sign" id="sign" />,
+            <CalcButton func={() => CalcController.calcClearPressed()}
+                        caption="C/CE" key="C/CE" />,
 
         ];
     }
@@ -87,7 +101,6 @@ class Keyboard extends React.Component {
 
 /*export*/
 function Screen() {
-    const inputStyle = { maxlength: 13 };
     const [result, lastOp, subtotal] = [
         ( state ) => state.result,
         ( state ) => state.lastOp,
@@ -103,7 +116,7 @@ function Screen() {
                 <div id="memory">
                     {' '}
                 </div>
-                <input readOnly={true} type={'text'} style={inputStyle} id="result" />
+                <input readOnly={true} maxLength={13} type="text" id="result" />
                 {result}
             </div>
         </div>
