@@ -16,6 +16,8 @@ const SET_RESULT_ACTION = 'SET_RESULT';
 const SET_SUBTOTAL_ACTION = 'SET_SUBTOTAL';
 /*export*/
 const SET_OPWASLAST_ACTION = 'SET_OPERATION_WAS_LAST';
+/*export*/
+const SET_REPEAT_VALUE = 'SET_REPEAT_VALUE';
 
 /*export*/
 const SET_STATE_ACTION = 'SET_STATE';
@@ -42,6 +44,11 @@ function updateStore( state = {}, action ) {
             return {
                 ...state, // object spread
                 opWasLast: action.opWasLast,
+            };
+        case SET_REPEAT_VALUE:
+            return {
+                ...state, // object spread
+                repeatValue: action.repeatValue,
             };
         default:
             return state;

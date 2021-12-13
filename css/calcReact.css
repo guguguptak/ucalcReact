@@ -26,28 +26,15 @@ button:hover {
     transform: scale(1.1);
 }
 
-#result {
+input {
     padding: 0.25rem 0.5rem;
     font-size: 125%;
     max-width: 10rem;
-
 }
 
 body {
     font-family: Calibri, sans-serif;
 }
-
-
-/*
-input[type='result']#subtotal {
-    -moz-appearance: textfield;
-}
-
-input#subtotal::-webkit-outer-spin-button,
-input#subtotal::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-*/
 
 .calc-grid {
     background: #eee;
@@ -64,7 +51,7 @@ input#subtotal::-webkit-inner-spin-button {
     height: 100%;
 }
 
-input {
+#result {
     text-align: right;
     border: none;
     padding-top: 0;

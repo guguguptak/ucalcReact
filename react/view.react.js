@@ -112,9 +112,9 @@ function Screen() {
             <div id="subtotal">
                 &nbsp; {subtotal} {lastOp}
             </div>
+
             <div id="input-line">
                 <div id="memory">
-                    {' '}
                 </div>
                 <input readOnly={true} maxLength={13} type="text" id="result" />
                 {result}
