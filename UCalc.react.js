@@ -34,7 +34,7 @@ class CalcController {
                     newState.dotPosition++;
                     if ( buttonNumber === 0 ) {
                         newState.fakeZeroes++;
-                        // updateInput();
+                        CalcController.updateInput();
                     } else {
                         newState.fakeZeroes = 0;
                         newState.result = state.result + buttonNumber / Math.pow( 10, state.dotPosition );
@@ -47,6 +47,16 @@ class CalcController {
             type: SET_STATE_ACTION,
             newState: newState,
         } );
+    }
+
+    static updateInput() {
+        // const number = calcModel.input;
+        // const fakeZeroString = ( calcModel.dotPosition === null || calcModel.fakeZeroes === 0 )
+        //     ? ''
+        //     : '0'.repeat( calcModel.fakeZeroes );
+        // $( '#calc-input' )[0].value = numberToString( number )
+        //     + ( ( calcModel.dotPosition === 0 || calcModel.dotPosition === calcModel.fakeZeroes ) ? '.' : '' ) //TODO: FIXME
+        //     + fakeZeroString;
     }
 
     static stopRepeat() {

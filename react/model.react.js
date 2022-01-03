@@ -17,8 +17,15 @@ const SET_SUBTOTAL_ACTION = 'SET_SUBTOTAL';
 /*export*/
 const SET_OPWASLAST_ACTION = 'SET_OPERATION_WAS_LAST';
 /*export*/
+const SET_LAST_OP = 'SET_LAST_OPERATION';
+/*export*/
+const SET_DOT_POSITION = 'SET_DOT_POSITION';
+/*export*/
+const SET_FAKE_ZEROS = 'SET_FAKE_ZEROS';
+/*export*/
+const SET_MEMORY = 'SET_MEMORY';
+/*export*/
 const SET_REPEAT_VALUE = 'SET_REPEAT_VALUE';
-
 /*export*/
 const SET_STATE_ACTION = 'SET_STATE';
 
@@ -44,6 +51,26 @@ function updateStore( state = {}, action ) {
             return {
                 ...state, // object spread
                 opWasLast: action.opWasLast,
+            };
+        case SET_LAST_OP:
+            return {
+                ...state, // object spread
+                repeatValue: action.lastOp,
+            };
+        case SET_DOT_POSITION:
+            return {
+                ...state, // object spread
+                repeatValue: action.dotPosition,
+            };
+        case SET_FAKE_ZEROS:
+            return {
+                ...state, // object spread
+                repeatValue: action.fakeZeroes,
+            };
+        case SET_MEMORY:
+            return {
+                ...state, // object spread
+                repeatValue: action.memory,
             };
         case SET_REPEAT_VALUE:
             return {

@@ -2,6 +2,7 @@
 //     SET_STATE_ACTION
 // } from './model.react.js';
 
+
 const PRECISION_MAX = 10;
 const MIN_NON_EXPONENTIAL = Math.pow( 10, -PRECISION_MAX );
 const MAX_NON_EXPONENTIAL = Math.pow( 10, PRECISION_MAX );
@@ -46,55 +47,56 @@ class CalcController {
         } );
     }
 
-    // static numberToString( n ) {
-    //     const absN = Math.abs( n );
-    //     if ( Object.is( n, -0 ) ) {
-    //         return '-0';
-    //     }
-    //     if ( Object.is( n, 0 ) ) {
-    //         return '0';
-    //     }
-    //     if ( absN > MAX_NON_EXPONENTIAL ) {
-    //         return n.toExponential();
-    //     }
-    //     if ( absN < MIN_NON_EXPONENTIAL ) {
-    //         return n.toExponential();
-    //     }
-    //     if ( absN < JS_DUMB_TOSTRING_EXP_THRESHOLD ) {
-    //         return n.toFixed( PRECISION_MAX ).replace( /0+$/, '' );
-    //     }
-    //
-    //     return n.toString();
-    // }
-    //
-    // static updateSubtotal() {
-    //     const state = store.getState();
-    //     const newState = {};
-    //     document.getElementById( 'subtotal' ).text(
-    //         ( ( state.subtotal === null ) ? '\xA0' : CalcController.numberToString( newState.subtotal ) )
-    //         + ( ( state.lastOp === null ) ? '' : ' ' + newState.lastOp )
-    //     );
-    //     store.dispatch( {
-    //         type: SET_STATE_ACTION,
-    //         newState: newState,
-    //     } );
-    // }
-    //
-    // static updateResult() {
-    //     const state = store.getState();
-    //     const newState = {};
-    //     const number = state.input;
-    //     const fakeZeroString = ( state.dotPosition === null || state.fakeZeroes === 0 )
-    //         ? ''
-    //         : '0'.repeat( newState.fakeZeroes );
-    //     document.getElementById( 'result' )[0].value = CalcController.numberToString( number )
-    //         + ( ( state.dotPosition === 0 || state.dotPosition === state.fakeZeroes ) ? '.' : '' ) //TODO: FIXME
-    //         + fakeZeroString;
-    //     store.dispatch( {
-    //         type: SET_STATE_ACTION,
-    //         newState: newState,
-    //     } );
-    // }
+    static numberToString( n ) {
+        const absN = Math.abs( n );
+        if ( Object.is( n, -0 ) ) {
+            return '-0';
+        }
+        if ( Object.is( n, 0 ) ) {
+            return '0';
+        }
+        if ( absN > MAX_NON_EXPONENTIAL ) {
+            return n.toExponential();
+        }
+        if ( absN < MIN_NON_EXPONENTIAL ) {
+            return n.toExponential();
+        }
+        if ( absN < JS_DUMB_TOSTRING_EXP_THRESHOLD ) {
+            return n.toFixed( PRECISION_MAX ).replace( /0+$/, '' );
+        }
+
+        return n.toString();
+    }
+
+    static updateSubtotal() {
+        const state = store.getState();
+        const newState = {};
+        document.getElementById( 'subtotal' ).text(
+            ( ( state.subtotal === null ) ? '\xA0' : CalcController.numberToString( newState.subtotal ) )
+            + ( ( state.lastOp === null ) ? '' : ' ' + newState.lastOp )
+        );
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
+    }
+
+
+    static updateResult() {
+        const state = store.getState();
+        const newState = {};
+        const number = state.result;
+        const fakeZeroString = ( state.dotPosition === null || state.fakeZeroes === 0 )
+            ? ''
+            : '0'.repeat( newState.fakeZeroes );
+        document.getElementById( 'result' )[0].value = CalcController.numberToString( number )
+            + ( ( state.dotPosition === 0 || state.dotPosition === state.fakeZeroes ) ? '.' : '' ) //TODO: FIXME
+            + fakeZeroString;
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
+    }
 
     static stopRepeat() {
         const newState = {
@@ -144,7 +146,6 @@ class CalcController {
     static calcOperationPressed( op ) {
         const state = store.getState();
         const newState = state.opWasLast ? {} : CalcController.doOperation();
-
         newState.subtotal = state.subtotal;
         newState.lastOp = op;
         newState.opWasLast = true;
@@ -163,6 +164,7 @@ class CalcController {
         CalcController.calcOperationPressed();
         const state = store.getState();
         const newState = {};
+        state.subtotal = state.result; //TODO???
         if ( state.repeatValue === null ) {
             if ( state.subtotal === null ) {
                 return;
@@ -182,29 +184,89 @@ class CalcController {
         } );
     }
 
+    static memoryButtonPressed( n ) {
+        const state = store.getState();
+        state.memory = n;
+        document.getElementById( 'memory' ).text( ( n === null ) ? '' : 'M' );
+    }
 
     static memoryRecallPressed() {
-        // selectOperation();
+        CalcController.memoryButtonPressed( 'MR' );
+        const state = store.getState();
+        const newState = {};
+        if ( state.memory !== null ) {
+            newState.result = state.memory;
+        }
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
     }
 
     static memoryStorePressed() {
-        // selectOperation();
+        CalcController.memoryButtonPressed( 'MS' );
+        const state = store.getState();
+        const newState = {};
+        newState.memory = state.result;
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
     }
 
     static memoryAddPressed() {
-        // selectOperation();
+        CalcController.memoryButtonPressed( 'M+' );
+        const state = store.getState();
+        const newState = {};
+        newState.memory += state.result;
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
+
     }
 
     static memoryClearPressed() {
-        // selectOperation();
+        CalcController.memoryButtonPressed();
+        store.dispatch( {
+            type: SET_MEMORY,
+            state: null,
+        } );
+
     }
 
     static dotPressed() {
-        // selectOperation();
+        const state = store.getState();
+        const newState = {};
+        CalcController.stopRepeat();
+        if ( state.opWasLast ) {
+            return;
+        }
+        switch ( state.dotPosition ) {
+            case null:
+                newState.dotPosition = 1;//TODO:fix dot & zeros positions
+                break;
+            case 1:
+                newState.dotPosition = null;
+                break;
+        }
+        // newState.dotPosition = n;
+        // CalcController.updateResult();
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
+
     }
 
     static signPressed() {
-        // selectOperation();
+        CalcController.stopRepeat();
+        const state = store.getState();
+        let newState = state.result *= -1;
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
     }
 
     static calcClearPressed() {
@@ -215,6 +277,7 @@ class CalcController {
                 newState: {
                     subtotal: null,
                     lastOp: null,
+                    memory: null,
                 },
             } );
         } else {
@@ -222,6 +285,8 @@ class CalcController {
                 type: SET_STATE_ACTION,
                 newState: {
                     result: 0,
+
+                    dotPosition: null,
                 },
             } );
         }

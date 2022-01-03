@@ -101,10 +101,11 @@ class Keyboard extends React.Component {
 
 /*export*/
 function Screen() {
-    const [result, lastOp, subtotal] = [
+    const [result, lastOp, subtotal, memory] = [
         ( state ) => state.result,
         ( state ) => state.lastOp,
         ( state ) => state.subtotal,
+        ( state ) => state.memory,
     ].map( ( x ) => ReactRedux.useSelector( x ) );
 
     return (
@@ -115,6 +116,7 @@ function Screen() {
 
             <div id="input-line">
                 <div id="memory">
+                    {memory}
                 </div>
                 <input readOnly={true} maxLength={13} type="text" id="result" />
                 {result}
