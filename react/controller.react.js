@@ -2,7 +2,6 @@
 //     SET_STATE_ACTION
 // } from './model.react.js';
 
-
 const PRECISION_MAX = 10;
 const MIN_NON_EXPONENTIAL = Math.pow( 10, -PRECISION_MAX );
 const MAX_NON_EXPONENTIAL = Math.pow( 10, PRECISION_MAX );
@@ -191,9 +190,9 @@ class CalcController {
     }
 
     static memoryRecallPressed() {
-        CalcController.memoryButtonPressed( 'MR' );
+        CalcController.memoryButtonPressed( 'M' );
         const state = store.getState();
-        const newState = {};
+        let newState = {};
         if ( state.memory !== null ) {
             newState.result = state.memory;
         }
@@ -204,9 +203,9 @@ class CalcController {
     }
 
     static memoryStorePressed() {
-        CalcController.memoryButtonPressed( 'MS' );
+        CalcController.memoryButtonPressed( 'M' );
         const state = store.getState();
-        const newState = {};
+        let newState = {};
         newState.memory = state.result;
         store.dispatch( {
             type: SET_STATE_ACTION,
@@ -215,10 +214,10 @@ class CalcController {
     }
 
     static memoryAddPressed() {
-        CalcController.memoryButtonPressed( 'M+' );
+        CalcController.memoryButtonPressed( 'M' );
         const state = store.getState();
-        const newState = {};
-        newState.memory += state.result;
+        let newState = {};
+        newState.memory = ( state.memory += state.result );
         store.dispatch( {
             type: SET_STATE_ACTION,
             newState: newState,
@@ -277,7 +276,6 @@ class CalcController {
                 newState: {
                     subtotal: null,
                     lastOp: null,
-                    memory: null,
                 },
             } );
         } else {
@@ -285,10 +283,27 @@ class CalcController {
                 type: SET_STATE_ACTION,
                 newState: {
                     result: 0,
-
                     dotPosition: null,
                 },
             } );
+            if ( state.subtotal === null ) {
+                store.dispatch( {
+                    type: SET_STATE_ACTION,
+                    newState: {
+                        lastOp: null,
+                        fakeZeroes: 0,
+                        dotPosition: null,
+                    },
+                } );
+            }
         }
+        CalcController.stopRepeat();
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: {
+                fakeZeroes: 0,
+                dotPosition: null,
+            },
+        } );
     }
 }
