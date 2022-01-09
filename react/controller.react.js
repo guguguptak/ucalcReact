@@ -163,7 +163,7 @@ class CalcController {
         CalcController.calcOperationPressed();
         const state = store.getState();
         const newState = {};
-        state.subtotal = state.result; //TODO???
+        // state.subtotal = state.result; //TODO???
         if ( state.repeatValue === null ) {
             if ( state.subtotal === null ) {
                 return;
@@ -183,27 +183,15 @@ class CalcController {
         } );
     }
 
-    static memoryButtonPressed( n ) {
-        const state = store.getState();
-        state.memory = n;
-        document.getElementById( 'memory' ).text( ( n === null ) ? '' : 'M' );
-    }
+    // static memoryButtonPressed( n ) {
+    //     const state = store.getState();
+    //     state.memory = n;
+    //     document.getElementById( 'memory' ).text( ( n === null ) ? '' : 'M' );
+    // }
 
-    static memoryRecallPressed() {
-        CalcController.memoryButtonPressed( 'M' );
-        const state = store.getState();
-        let newState = {};
-        if ( state.memory !== null ) {
-            newState.result = state.memory;
-        }
-        store.dispatch( {
-            type: SET_STATE_ACTION,
-            newState: newState,
-        } );
-    }
 
     static memoryStorePressed() {
-        CalcController.memoryButtonPressed( 'M' );
+        // document.getElementById( 'memory' ).text( 'M' );
         const state = store.getState();
         let newState = {};
         newState.memory = state.result;
@@ -213,20 +201,37 @@ class CalcController {
         } );
     }
 
-    static memoryAddPressed() {
-        CalcController.memoryButtonPressed( 'M' );
+    static memoryRecallPressed() {
+        // CalcController.memoryButtonPressed( 'm' );
         const state = store.getState();
         let newState = {};
-        newState.memory = ( state.memory += state.result );
+        if ( state.memory !== null ) {
+            newState.result = state.memory;
+            // document.getElementById( 'memory' ).text( 'M' );
+        }
         store.dispatch( {
             type: SET_STATE_ACTION,
             newState: newState,
+        } );
+    }
+
+    static memoryAddPressed() {
+        const state = store.getState();
+        // let newState = {};
+        // newState.memory += state.result;
+        // store.dispatch( {
+        //     type: SET_STATE_ACTION,
+        //     newState: newState,
+        // } );
+        store.dispatch( {
+            type: SET_MEMORY,
+            state: state.memory += state.result,
         } );
 
     }
 
     static memoryClearPressed() {
-        CalcController.memoryButtonPressed();
+        // CalcController.memoryButtonPressed();
         store.dispatch( {
             type: SET_MEMORY,
             state: null,
@@ -261,7 +266,8 @@ class CalcController {
     static signPressed() {
         CalcController.stopRepeat();
         const state = store.getState();
-        let newState = state.result *= -1;
+        let newState = {};
+        newState.result *= -1;
         store.dispatch( {
             type: SET_STATE_ACTION,
             newState: newState,

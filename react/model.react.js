@@ -71,6 +71,7 @@ function updateStore( state = {}, action ) {
             return {
                 ...state, // object spread
                 repeatValue: action.memory,
+               
             };
         case SET_REPEAT_VALUE:
             return {

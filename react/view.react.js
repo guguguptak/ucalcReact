@@ -21,7 +21,8 @@ class CalcButton extends React.Component {
     render() {
         return (
             <button id={'calc-' + BUTTONS_NAME_MAP[this.props.caption]}
-                    style={this.props.customStyle} onClick={this.props.func}>{this.props.caption}</button>
+                    style={this.props.customStyle}
+                    onClick={this.props.func}>{this.props.caption}</button>
         );
     }
 }
@@ -101,6 +102,7 @@ class Keyboard extends React.Component {
 
 /*export*/
 function Screen() {
+
     const [result, lastOp, subtotal, memory] = [
         ( state ) => state.result,
         ( state ) => state.lastOp,
@@ -113,17 +115,15 @@ function Screen() {
             <div id="subtotal">
                 &nbsp; {subtotal} {lastOp}
             </div>
-
             <div id="input-line">
                 <div id="memory">
-                    {memory}
+                    {}
                 </div>
                 <input readOnly={true} maxLength={13} type="text" id="result" />
                 {result}
             </div>
         </div>
-    )
-        ;
+    );
 }
 
 /*export*/
