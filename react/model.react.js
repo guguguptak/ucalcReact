@@ -55,23 +55,23 @@ function updateStore( state = {}, action ) {
         case SET_LAST_OP:
             return {
                 ...state, // object spread
-                repeatValue: action.lastOp,
+                lastOp: action.lastOp,
             };
         case SET_DOT_POSITION:
             return {
                 ...state, // object spread
-                repeatValue: action.dotPosition,
+                dotPosition: action.dotPosition,
             };
         case SET_FAKE_ZEROS:
             return {
                 ...state, // object spread
-                repeatValue: action.fakeZeroes,
+                fakeZeros: action.fakeZeroes,
             };
         case SET_MEMORY:
             return {
                 ...state, // object spread
-                repeatValue: action.memory,
-               
+                memory: action.memory,
+
             };
         case SET_REPEAT_VALUE:
             return {

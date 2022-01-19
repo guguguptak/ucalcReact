@@ -27,8 +27,12 @@ class CalcController {
                 newState.fakeZeroes = 0;
                 newState.result = state.result * 10 + buttonNumber;
             } else {
-                if ( state.dotPosition < PRECISION_MAX ) {
-                    newState.dotPosition++;
+                if ( state.dotPosition < PRECISION_MAX ) {//TODO dotPosition
+                    store.dispatch( {
+                        type: SET_DOT_POSITION,
+                        state: state.dotPosition++,
+                    } );
+                    // newState.dotPosition++;
                     if ( buttonNumber === 0 ) {
                         newState.fakeZeroes++;
                         CalcController.updateResult();
@@ -46,6 +50,7 @@ class CalcController {
         } );
     }
 
+//TODO fix function below
     static numberToString( n ) {
         const absN = Math.abs( n );
         if ( Object.is( n, -0 ) ) {
@@ -81,7 +86,7 @@ class CalcController {
     }
 
 
-    static updateResult() {
+    static updateResult() {//TODO this
         const state = store.getState();
         const newState = {};
         const number = state.result;
@@ -133,23 +138,23 @@ class CalcController {
         }
         const newState = {
             result: newResult,
-            lastOp: null,
+            // lastOp: null,
             opWasLast: true,
             dotPosition: null,
             fakeZeroes: 0,
         };
-
         return newState;
+
     }
 
     static calcOperationPressed( op ) {
         const state = store.getState();
-        const newState = state.opWasLast ? {} : CalcController.doOperation();
-        newState.subtotal = state.subtotal;
+        const newState = state.opWasLast ? {} : CalcController.doOperation( op );
         newState.lastOp = op;
         newState.opWasLast = true;
         newState.dotPosition = null;
-
+        // newState.repeatValue = state.result; TODO problems with expected values after operation (calcOperationPressed)
+        // newState.subtotal = null;
         if ( state.repeatValue === null ) {
             newState.subtotal = state.result;
         }
@@ -159,6 +164,9 @@ class CalcController {
         } );
     }
 
+    // TODO make calcTotalPressed great again (or rather: first time)
+    //TODO fix problem with repeatValue (and repeat operation)
+    //TODO find why 'invalid operation' came after press calcTotalPressed
     static calcTotalPressed() {
         CalcController.calcOperationPressed();
         const state = store.getState();
@@ -168,12 +176,13 @@ class CalcController {
             if ( state.subtotal === null ) {
                 return;
             }
-            newState.repeatValue = newState.result;
+            newState.repeatValue = state.result;
             CalcController.doOperation();
             newState.subtotal = null;
+            newState.repeatValue = state.result;
         } else {
-            newState.subtotal = newState.result;
-            newState.result = newState.repeatValue;
+            newState.subtotal = state.result;
+            newState.result = state.repeatValue;
             CalcController.doOperation();
             newState.subtotal = null;
         }
@@ -187,11 +196,10 @@ class CalcController {
     //     const state = store.getState();
     //     state.memory = n;
     //     document.getElementById( 'memory' ).text( ( n === null ) ? '' : 'M' );
-    // }
+    // } TODO this!
 
 
     static memoryStorePressed() {
-        // document.getElementById( 'memory' ).text( 'M' );
         const state = store.getState();
         let newState = {};
         newState.memory = state.result;
@@ -202,12 +210,10 @@ class CalcController {
     }
 
     static memoryRecallPressed() {
-        // CalcController.memoryButtonPressed( 'm' );
         const state = store.getState();
         let newState = {};
         if ( state.memory !== null ) {
             newState.result = state.memory;
-            // document.getElementById( 'memory' ).text( 'M' );
         }
         store.dispatch( {
             type: SET_STATE_ACTION,
@@ -217,12 +223,6 @@ class CalcController {
 
     static memoryAddPressed() {
         const state = store.getState();
-        // let newState = {};
-        // newState.memory += state.result;
-        // store.dispatch( {
-        //     type: SET_STATE_ACTION,
-        //     newState: newState,
-        // } );
         store.dispatch( {
             type: SET_MEMORY,
             state: state.memory += state.result,
@@ -231,7 +231,6 @@ class CalcController {
     }
 
     static memoryClearPressed() {
-        // CalcController.memoryButtonPressed();
         store.dispatch( {
             type: SET_MEMORY,
             state: null,
@@ -248,29 +247,28 @@ class CalcController {
         }
         switch ( state.dotPosition ) {
             case null:
-                newState.dotPosition = 1;//TODO:fix dot & zeros positions
+                newState.dotPosition = 0;//TODO:fix dot & zeros positions
                 break;
-            case 1:
+            case 0:
                 newState.dotPosition = null;
                 break;
         }
-        // newState.dotPosition = n;
-        // CalcController.updateResult();
         store.dispatch( {
             type: SET_STATE_ACTION,
             newState: newState,
         } );
-
     }
 
     static signPressed() {
         CalcController.stopRepeat();
         const state = store.getState();
-        let newState = {};
-        newState.result *= -1;
+        // let newState = { state: state.result *= -1, };
+        // let newState={};
+        // state.result *= -1;
+        let newState = state.result *= -1;
         store.dispatch( {
             type: SET_STATE_ACTION,
-            newState: newState,
+            state: newState,
         } );
     }
 
@@ -300,7 +298,8 @@ class CalcController {
                         fakeZeroes: 0,
                         dotPosition: null,
                     },
-                } );
+                } )
+                ;
             }
         }
         CalcController.stopRepeat();
