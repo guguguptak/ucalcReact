@@ -168,7 +168,7 @@ class CalcController {
     //TODO fix problem with repeatValue (and repeat operation)
     //TODO find why 'invalid operation' came after press calcTotalPressed
     static calcTotalPressed() {
-        CalcController.calcOperationPressed();
+        // CalcController.calcOperationPressed(); TODO???<-noooooo, no no no no
         const state = store.getState();
         const newState = {};
         // state.subtotal = state.result; //TODO???
@@ -177,13 +177,12 @@ class CalcController {
                 return;
             }
             newState.repeatValue = state.result;
-            CalcController.doOperation();
+            CalcController.calcOperationPressed();
             newState.subtotal = null;
-            newState.repeatValue = state.result;
         } else {
             newState.subtotal = state.result;
             newState.result = state.repeatValue;
-            CalcController.doOperation();
+            CalcController.calcOperationPressed();
             newState.subtotal = null;
         }
         store.dispatch( {
