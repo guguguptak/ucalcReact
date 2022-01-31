@@ -35,3 +35,20 @@ document.getElementById( 'calc-body' ).addEventListener( 'keydown', ( evt ) => {
     evt.preventDefault();
 
 } );
+//TODo add 'M'
+//
+// function dupa() {
+//     const state = store.getState();
+//     const text = document.getElementById( 'memory' ).text;
+//     if ( state.memory !== null ) {
+//         text( 'M' );
+//     } else {
+//         text( '' );
+//     }
+//     // text( ( state.memory === null ) ? '' : 'M' );
+// }
+//
+//
+// // document.addEventListener('') {
+// //     document.getElementById( 'memory-store' ).addEventListener( 'onclick', dupa, false );
+// // } );

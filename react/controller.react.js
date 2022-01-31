@@ -2,6 +2,7 @@
 //     SET_STATE_ACTION
 // } from './model.react.js';
 
+
 const PRECISION_MAX = 10;
 const MIN_NON_EXPONENTIAL = Math.pow( 10, -PRECISION_MAX );
 const MAX_NON_EXPONENTIAL = Math.pow( 10, PRECISION_MAX );
@@ -13,7 +14,7 @@ class CalcController {
         CalcController.stopRepeat();
 
         const state = store.getState();
-        const newState = {
+        let newState = {
             opWasLast: false,
         };
 
@@ -26,12 +27,13 @@ class CalcController {
             if ( state.dotPosition === null ) {
                 newState.fakeZeroes = 0;
                 newState.result = state.result * 10 + buttonNumber;
-            } else {
-                if ( state.dotPosition < PRECISION_MAX ) {//TODO dotPosition
-                    store.dispatch( {
-                        type: SET_DOT_POSITION,
-                        state: state.dotPosition++,
-                    } );
+            } else {//TODO dotPosition;;
+                if ( state.dotPosition < PRECISION_MAX ) {
+                    newState = { state: state.dotPosition++, }; //TODO:why??
+                    // store.dispatch( {
+                    //     type: SET_DOT_POSITION,
+                    //     state: state.dotPosition++,
+                    // } );
                     // newState.dotPosition++;
                     if ( buttonNumber === 0 ) {
                         newState.fakeZeroes++;
@@ -43,7 +45,6 @@ class CalcController {
                 }
             }
         }
-
         store.dispatch( {
             type: SET_STATE_ACTION,
             newState: newState,
@@ -88,7 +89,7 @@ class CalcController {
 
     static updateResult() {//TODO this
         const state = store.getState();
-        const newState = {};
+        let newState = {};
         const number = state.result;
         const fakeZeroString = ( state.dotPosition === null || state.fakeZeroes === 0 )
             ? ''
@@ -149,7 +150,7 @@ class CalcController {
 
     static undoInput() {
         const state = store.getState();
-        const newState = {};
+        let newState = {};
         CalcController.stopRepeat();
 
         if ( state.opWasLast ) {
@@ -164,7 +165,7 @@ class CalcController {
                 CalcController.dotPressed();
                 break;
             default:
-                newState.dotPosition--;
+                newState = { state: state.dotPosition--, };
                 if ( state.fakeZeroes > 0 ) {
                     newState.fakeZeroes--;
                 } else { // TODO FIXME 0.01001 eg
@@ -222,13 +223,6 @@ class CalcController {
             newState: newState,
         } );
     }
-
-    // static memoryButtonPressed( n ) {
-    //     const state = store.getState();
-    //     state.memory = n;
-    //     document.getElementById( 'memory' ).text( ( n === null ) ? '' : 'M' );
-    // } TODO this!
-
 
     static memoryStorePressed() {
         const state = store.getState();
