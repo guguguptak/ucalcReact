@@ -147,6 +147,38 @@ class CalcController {
 
     }
 
+    static undoInput() {
+        const state = store.getState();
+        const newState = {};
+        CalcController.stopRepeat();
+
+        if ( state.opWasLast ) {
+            return;
+        }
+
+        switch ( state.dotPosition ) {
+            case null:
+                newState.result = Math.round( state.result / 10 );
+                break;
+            case 0:
+                CalcController.dotPressed();
+                break;
+            default:
+                newState.dotPosition--;
+                if ( state.fakeZeroes > 0 ) {
+                    newState.fakeZeroes--;
+                } else { // TODO FIXME 0.01001 eg
+                    const shifter = Math.pow( 10, state.dotPosition );
+                    newState.result = Math.trunc( state.result * shifter ) / shifter;
+                }
+                break;
+        }
+        store.dispatch( {
+            type: SET_STATE_ACTION,
+            newState: newState,
+        } );
+    }
+
     static calcOperationPressed( op ) {
         const state = store.getState();
         const newState = state.opWasLast ? {} : CalcController.doOperation( op );

@@ -9,7 +9,7 @@ const keymap = {
 
     'Enter': () => CalcController.calcTotalPressed(),
     'Escape': () => CalcController.calcClearPressed(),
-    // 'Backspace': () => undoInput(),
+    'Backspace': () => CalcController.undoInput(),
     '.': () => CalcController.dotPressed(),
     ',': () => CalcController.dotPressed(),
     'v': async ( evt ) => await pasteFromClipboard( evt ),
@@ -33,5 +33,5 @@ document.getElementById( 'calc-body' ).addEventListener( 'keydown', ( evt ) => {
     }
     action( evt );
     evt.preventDefault();
-   
+
 } );

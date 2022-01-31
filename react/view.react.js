@@ -17,6 +17,7 @@ const BUTTONS_NAME_MAP = {
 
 };
 
+
 class CalcButton extends React.Component {
     render() {
         return (
@@ -40,6 +41,7 @@ class NumericButton extends React.Component {
         );
     }
 }
+
 
 const OP_NAME_MAP = {
     '+': 'plus',
@@ -101,6 +103,7 @@ class Keyboard extends React.Component {
 }
 
 /*export*/
+
 function Screen() {
 
     const [result, lastOp, subtotal, memory] = [
@@ -139,3 +142,5 @@ class Calc extends React.Component {
         );
     }
 }
+
+
