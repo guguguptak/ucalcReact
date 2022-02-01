@@ -120,7 +120,7 @@ function Screen() {
             </div>
             <div id="input-line">
                 <div id="memory">
-                    {}
+                    {memory ? 'M' : ''}
                 </div>
                 <input readOnly={true} maxLength={13} type="text" id="result" />
                 {result}
