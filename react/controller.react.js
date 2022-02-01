@@ -30,11 +30,6 @@ class CalcController {
             } else {//TODO dotPosition;;
                 if ( state.dotPosition < PRECISION_MAX ) {
                     newState = { state: state.dotPosition++, }; //TODO:why??
-                    // store.dispatch( {
-                    //     type: SET_DOT_POSITION,
-                    //     state: state.dotPosition++,
-                    // } );
-                    // newState.dotPosition++;
                     if ( buttonNumber === 0 ) {
                         newState.fakeZeroes++;
                         CalcController.updateResult();
@@ -197,14 +192,9 @@ class CalcController {
         } );
     }
 
-    // TODO make calcTotalPressed great again (or rather: first time)
-    //TODO fix problem with repeatValue (and repeat operation)
-    //TODO find why 'invalid operation' came after press calcTotalPressed
     static calcTotalPressed() {
-        // CalcController.calcOperationPressed(); TODO???<-noooooo, no no no no
         const state = store.getState();
-        const newState = {};
-        // state.subtotal = state.result; //TODO???
+        let newState = {};
         if ( state.repeatValue === null ) {
             if ( state.subtotal === null ) {
                 return;
@@ -248,11 +238,12 @@ class CalcController {
 
     static memoryAddPressed() {
         const state = store.getState();
+        let newState = {};
+        newState.memory = state.memory + state.result;
         store.dispatch( {
-            type: SET_MEMORY,
-            state: state.memory += state.result,
+            type: SET_STATE_ACTION,
+            newState: newState,
         } );
-
     }
 
     static memoryClearPressed() {
@@ -260,7 +251,6 @@ class CalcController {
             type: SET_MEMORY,
             state: null,
         } );
-
     }
 
     static dotPressed() {
@@ -272,7 +262,7 @@ class CalcController {
         }
         switch ( state.dotPosition ) {
             case null:
-                newState.dotPosition = 0;//TODO:fix dot & zeros positions
+                newState.dotPosition = 0;
                 break;
             case 0:
                 newState.dotPosition = null;
@@ -287,9 +277,6 @@ class CalcController {
     static signPressed() {
         CalcController.stopRepeat();
         const state = store.getState();
-        // let newState = { state: state.result *= -1, };
-        // let newState={};
-        // state.result *= -1;
         let newState = state.result *= -1;
         store.dispatch( {
             type: SET_STATE_ACTION,

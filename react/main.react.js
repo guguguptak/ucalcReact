@@ -5,6 +5,7 @@
 
 const store = Redux.createStore( updateStore, initialState );
 ReactDOM.render( <Calc />, document.getElementsByTagName( 'calc-main' )[0] );
+
 const keymap = {
 
     'Enter': () => CalcController.calcTotalPressed(),
@@ -27,6 +28,7 @@ for ( const [k, v] of Object.entries( opMap ) ) {
     keymap[v] = () => CalcController.calcOperationPressed( v );
 }
 document.getElementById( 'calc-body' ).addEventListener( 'keydown', ( evt ) => {
+
     const action = keymap[evt.key];
     if ( action === undefined ) {
         return;
@@ -35,20 +37,3 @@ document.getElementById( 'calc-body' ).addEventListener( 'keydown', ( evt ) => {
     evt.preventDefault();
 
 } );
-//TODo add 'M'
-//
-// function dupa() {
-//     const state = store.getState();
-//     const text = document.getElementById( 'memory' ).text;
-//     if ( state.memory !== null ) {
-//         text( 'M' );
-//     } else {
-//         text( '' );
-//     }
-//     // text( ( state.memory === null ) ? '' : 'M' );
-// }
-//
-//
-// // document.addEventListener('') {
-// //     document.getElementById( 'memory-store' ).addEventListener( 'onclick', dupa, false );
-// // } );

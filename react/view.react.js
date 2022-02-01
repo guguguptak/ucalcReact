@@ -67,11 +67,7 @@ class Keyboard extends React.Component {
     render() {
 
         return [
-            // Array.from(
-            //     { length: 10 },
-            //     ( _, i ) =>
-            //         <NumericButton key={i} number={i} />
-            // ),
+          
             ['/', '*', '-', '+']
                 .map( s =>
                     <OperationButton key={s} operation={s} />
